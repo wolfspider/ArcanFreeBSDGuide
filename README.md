@@ -1,4 +1,4 @@
-## Installing Arcan on FreeBSD
+# Installing Arcan on FreeBSD
 
 [Arcan](https://arcan-fe.com/) from the beginning has had good FreeBSD support. This is a guide for installing it on your FreeBSD system and additional tips for getting it configured for graphical acceleration without utilizing Xorg/X11. For the most part the build instructions *just work* as described on the project page and [Wiki](https://github.com/letoram/arcan/wiki/bsd) for Arcan. 
 
@@ -55,8 +55,18 @@ Start Arcan again and now you should have a new desktop environment without X11/
 
 #### Known Issues
 
-At this time Arcan is not detecting the mouse with the egl-dri backend. I'm using a typical logitech wireless keyboard and mouse, however I tried running the Arcan startup command with "sudo" and it did detect the mouse but the x/y axis is reversed and the sensitivity is too strong. There is code for the mouse in the arcan/src/platform/freebsd folder specific to this which will probably need to be looked at.
+At this time Arcan is not detecting the mouse with the egl-dri backend. I'm using a typical logitech wireless keyboard and mouse, however I tried running the Arcan startup command with "sudo" and it did detect the mouse and the sensitivity is too strong. There is code for the mouse in the arcan/src/platform/freebsd folder specific to this which will probably need to be looked at.
 
+Arcan apparently uses /dev/sysmouse in order to access it. In order to make it work as a user disable HALD in /etc/rc.conf, add the user to both groups "wheel" and "operator", and change permissions for the mouse for now.
+
+    sudo chmod 777 /dev/sysmouse
+    sudo chmod 777 /dev/ums0
+
+Your mouse may have a different address than "ums0" just substitute that for the second command. Most likely this can be narrowed down and not all of this is needed.
+
+For more information about changing the acceleration of the mouse read "man sysmouse".
+
+ 
 
 
 
